@@ -71,7 +71,7 @@ The available commands are:
 - `add [command name]`: This will add a new command
 - `projects`: This lists the projects( more on this later )
 
-### init ( i, initialise, initialize, create )
+### `init` ( i, initialise, initialize, create )
 
 Usage:
 ```console
@@ -95,7 +95,7 @@ GLOBAL FLAGS
   -c, --config string   config file (default is $HOME/.cobra-cli-ng.yaml)
 ```
 
-### add ( a, command )
+### `add` ( a, command )
 
 Usage:
 ```console
@@ -126,7 +126,7 @@ GLOBAL FLAGS
   -c, --config string   config file (default is $HOME/.cobra-cli-ng.yaml)
 ```
 
-### projects ( p )
+### `projects` ( p ) [VERY WIP]
 
 Usage:
 ```console
