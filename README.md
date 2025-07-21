@@ -26,6 +26,8 @@ This would create the appropriate folder, or folders, we specified. But then, it
 
 With that in mind, I decided to have a file called `cobra-cli-ng.json`, track all the _projects_ we can ask the command to initialize. This, of course, implies we get one or more commands that do not exists in the original `cobra-cli` implementation. You can look at the `cobra-cli-ng.json` file as any other `JSON` file created by a package manager. I would strongly advise you to include it in your source versioning system.
 
+---
+
 The other thing that I noticed was the fact that the code that was created is a bit simplistic and narrow minded.
 
 For example: It assumes we don't want to use `RunE` and `PreRunE`. These are a good choices if you want to validate your flags( and your arguments ), and if something is wrong, have `cobra` print the error and the usage.
@@ -51,6 +53,18 @@ This will allow something like this:
 ```
 
 Both those projects will be tracked in the `cobra-cli-ng.json` file for future command addition.
+
+---
+
+Another thing that has been very frustrating is the fact that `cobra-cli` will not ask to replace any file if it exists.
+
+Also, the fact that it imposes the use of a `LICENSE` file and license headers on each source code file, is not kosher.
+
+---
+
+Finally, I'm thinking of providing more than a single option for the code generated.
+
+Not sure **how** I'm going to express that in terms of the flags, but I'll cross that bridge when I get there.
 
 ## Install
 
