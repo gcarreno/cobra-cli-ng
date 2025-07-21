@@ -1,0 +1,145 @@
+# Cobra-CLI Generator Next Generation
+
+> [!IMPORTANT]
+> This iteration of the tool draws a lot of inspiration, and some snippets of code, from the original: [cobra-cli](https://github.com/spf13/cobra-cli).
+
+> [!WARNING]
+> This is very much a work in progress( WIP ).\
+> Please allow me to flesh the whole thing out!
+
+This tool provides a way to quick and easily create boilerplate code for all you commands and sub commands when using [cobra](https://github.com/spf13/cobra) and [viper](https://github.com/spf13/viper).
+
+## Motivation
+
+I've been using the original [cobra-cli](https://github.com/spf13/cobra-cli) for quite a while now. And I've enjoyed it immensely!!
+
+Alas, the more I used it, but mostly, the more I investigated about less simple usage of [cobra](https://github.com/spf13/cobra) and [viper](https://github.com/spf13/viper), the more I had to customize the current output of [cobra-cli](https://github.com/spf13/cobra-cli).
+
+I recognize this is a me **problem**. But since I'm a programmer, I do have the tools to make it betters. For me, and for anyone that has felt the same limitations and sees my work as an improvement.
+
+Also, the original project has been inactive for about two years as of July of 2025.
+
+## Differences/Updates
+
+One of the things that frustrated me was the fact that with the original `init` command we could specify a path: `init [path]`.
+This would create the appropriate folder, or folders, we specified. But then, it would make use `cd` to that new path in order to add any new commands. It wasn't aware of the path we just asked it to start our project in.
+
+With that in mind, I decided to have a file called `cobra-cli-ng.json`, track all the _projects_ we can ask the command to initialize. This of course implies we get one or more commands that do not exists in the original `cobra-cli` implementation. You can look at the `cobra-cli-ng.json` file as any other `JSON` file created by a package manager.
+
+The other thing that I noticed was the fact that the code that was created is a bit simplistic and narrow minded.
+
+For example: It assumes we don't want to use `RunE` and `PreRunE`. These are a good choice if you want to validate your flags and your arguments and if something is wrong, have `cobra` print the usage.
+
+To mitigate this, in the future, I'll have sub-commands of `projects` to add commands to a particular project.
+
+This will allow something like this:
+```
+    ▾ app/
+        ▾ commands/
+            ▾ myserverapp/
+                ▾ cmd/
+                    commandone.go
+                    commandtwo.go
+                    root.go
+                main.go
+            ▾ myservercliapp/
+                ▾ cmd
+                    commandone.go
+                    commandtwo.go                    
+                    root.go
+                main.go
+```
+
+Both those projects will be tracked in the `cobra-cli-ng.json` file for future command addition.
+
+## Install
+
+You can, quickly, install this tool by using the following command:
+```bash
+$ go install github.com/gcarreno/cobra-cli-ng@latest
+```
+
+Once installed, you should have `cobra-cli-ng` in your `$GOPATH/bin` folder. You can test if it's available by using this command:
+```bash
+$ command -v cobra-cli-ng
+```
+
+## Commands
+
+The available commands are:
+- `init [path]`: This will create the main structure for `cobra` to start operating
+- `add [command name]`: This will add a new command
+- `projects`: This lists the projects( more on this later )
+
+### init ( i, initialise, initialize, create )
+
+Usage:
+```console
+$ cobra-cli-ng init --help
+Initialize (cobra-cli-ng init) will create a new application, with the 
+appropriate structure for a Cobra-based CLI application.
+
+This init command must be run inside of a go module (please run "go mod init <MODNAME>" first)
+
+USAGE
+  cobra-cli-ng init [path] [flags]
+
+ALIASES
+  init, i, initialize, initialise, create
+
+FLAGS
+  -h, --help   help for init
+
+GLOBAL FLAGS
+  -c, --config string   config file (default is $HOME/.cobra-cli-ng.yaml)
+```
+
+### add ( a )
+
+Usage:
+```console
+$ cobra-cli-ng add --help
+Add (cobra-cli-ng add) will create a new command, with the 
+appropriate structure for a Cobra-based CLI application, and 
+register it to its parent (default rootCmd).
+
+If you want your command to be public, pass in the command name
+with an initial uppercase letter.
+
+USAGE
+  cobra-cli-ng add [command name] [flags]
+
+ALIASES
+  add, a, command
+
+EXAMPLES
+  # Adding a new command named server, resulting in a new cmd/server.go
+  cobra-cli-ng add server
+
+FLAGS
+  -h, --help             help for add
+  -p, --project string   a project name
+
+GLOBAL FLAGS
+  -c, --config string   config file (default is $HOME/.cobra-cli-ng.yaml)
+```
+
+### projects ( p )
+
+Usage:
+```console
+$ cobra-cli-ng projects --help
+List (cobra-cli-ng projects) will list all the saved projects in "cobra-cli-ng.json".
+
+USAGE
+  cobra-cli-ng projects [flags]
+
+ALIASES
+  projects, p
+
+FLAGS
+  -h, --help   help for projects
+
+GLOBAL FLAGS
+  -c, --config string   config file (default is $HOME/.cobra-cli-ng.yaml)
+```
