@@ -1,12 +1,14 @@
-BIN := bin
-EXE := cobra-cli-ng
-MAIN := main.go
-MODULE := github.com/gcarreno/cobra-cli-ng
-GO := $(shell which go)
-
-ifndef GOPATH
+GO     := $(shell which go)
 GOPATH := $(shell $(GO) env | grep GOPATH | cut -d"'" -f2)
+GOOS   := $(shell $(GO) env | grep GOOS | cut -d"'" -f2)
+BIN    := bin
+ifeq ($(GOOS), windows)
+EXE    := cobra-cli-ng.exe
+else
+EXE    := cobra-cli-ng
 endif
+MAIN   := main.go
+MODULE := github.com/gcarreno/cobra-cli-ng
 
 default: all
 
@@ -17,7 +19,7 @@ test:
 	$(GO) test -r "^Test" "$(MODULE)/tests"
 
 build:
-	$(info ========== Building $(@))
+	$(info ========== Building for $(GOOS) into $(BIN)/$(EXE))
 	mkdir -p $(BIN)
 	$(GO) build -o $(BIN)/$(EXE) $(MAIN)
 
