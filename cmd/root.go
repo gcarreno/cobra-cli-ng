@@ -29,6 +29,7 @@ const (
 	cFlagViperLong    = "viper"
 	cFlagViperDefault = false
 	cFlagViperUsage   = "use viper for configuration"
+	cFlagViperViper   = "useViper"
 )
 
 var (
@@ -71,6 +72,8 @@ func init() {
 
 	// Viper flag
 	rootCmd.PersistentFlags().BoolVarP(&useViper, cFlagViperLong, cFlagViperShort, cFlagViperDefault, cFlagViperUsage)
+	// Bind "viper" flag with viper
+	viper.BindPFlag(cFlagViperViper, rootCmd.Flags().Lookup(cFlagViperLong))
 
 	// Register our own usage function
 	rootCmd.SetUsageFunc(usage)
