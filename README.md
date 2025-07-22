@@ -1,4 +1,12 @@
 # Cobra-CLI Generator Next Generation
+[![Build Status](https://github.com/gcarreno/cobra-cli-ng/actions/workflows/main.yaml/badge.svg?branch=main)](https://github.com/gcarreno/cobra-cli-ng/actions)
+![Go](https://img.shields.io/github/languages/top/gcarreno/cobra-cli-ng?logo=go)
+[![Last Commit](https://img.shields.io/github/last-commit/gcarreno/cobra-cli-ng?logo=github)](https://github.com/gcarreno/cobra-cli-ng)
+![Commits Since Last Release](https://img.shields.io/github/commits-since/gcarreno/cobra-cli-ng/latest)
+![COntributors](https://img.shields.io/github/contributors/gcarreno/cobra-cli-ng)
+[![License](https://img.shields.io/github/license/gcarreno/cobra-cli-ng)](https://github.com/gcarreno/cobra-cli-ng/blob/main/LICENSE)
+[![Latest Release](https://img.shields.io/github/v/release/gcarreno/cobra-cli-ng?label=latest%20release)](https://github.com/gcarreno/cobra-cli-ng/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/gcarreno/cobra-cli-ng/total)](https://github.com/gcarreno/cobra-cli-ng/releases)
 
 > [!IMPORTANT]
 > This iteration of the tool draws a lot of inspiration, and some snippets of code, from the original: [cobra-cli](https://github.com/spf13/cobra-cli).
