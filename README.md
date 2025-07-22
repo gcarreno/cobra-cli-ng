@@ -5,7 +5,7 @@
 ![Commits Since Last Release](https://img.shields.io/github/commits-since/gcarreno/cobra-cli-ng/latest?logo=github)
 ![COntributors](https://img.shields.io/github/contributors/gcarreno/cobra-cli-ng?logo=github)
 [![License](https://img.shields.io/github/license/gcarreno/cobra-cli-ng?logo=github)](https://github.com/gcarreno/cobra-cli-ng/blob/main/LICENSE)
-[![Latest Release](https://img.shields.io/github/v/release/gcarreno/cobra-cli-ng?label=latest%20releaselogo=github)](https://github.com/gcarreno/cobra-cli-ng/releases/latest)
+[![Latest Release](https://img.shields.io/github/v/release/gcarreno/cobra-cli-ng?label=latest%20release&logo=github)](https://github.com/gcarreno/cobra-cli-ng/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/gcarreno/cobra-cli-ng/total?logo=github)](https://github.com/gcarreno/cobra-cli-ng/releases)
 
 > [!IMPORTANT]
