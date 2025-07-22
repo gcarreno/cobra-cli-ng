@@ -16,7 +16,7 @@ MODULE := github.com/gcarreno/cobra-cli-ng
 BIN := bin
 
 # Version
-VERSION := $(shell GOOS=linux $(GO) run $(MAIN) "--version" | cut -d" " -f 3)
+VERSION := $(shell GOOS=$(GOOS) $(GO) run $(MAIN) "--version" | cut -d" " -f 3)
 
 # Proper executable name
 ifeq ($(GOOS), windows)
