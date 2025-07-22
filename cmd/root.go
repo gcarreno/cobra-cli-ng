@@ -25,7 +25,6 @@ const (
 	cFlagForceDefault = false
 	cFlagForceUsage   = "force overwriting files"
 
-	cFlagViperShort   = "v"
 	cFlagViperLong    = "viper"
 	cFlagViperDefault = false
 	cFlagViperUsage   = "use viper for configuration"
@@ -71,7 +70,7 @@ func init() {
 	rootCmd.PersistentFlags().BoolVarP(&force, cFlagForceLong, cFlagForceShort, cFlagForceDefault, cFlagForceUsage)
 
 	// Viper flag
-	rootCmd.PersistentFlags().BoolVarP(&useViper, cFlagViperLong, cFlagViperShort, cFlagViperDefault, cFlagViperUsage)
+	rootCmd.PersistentFlags().BoolVar(&useViper, cFlagViperLong, cFlagViperDefault, cFlagViperUsage)
 	// Bind "viper" flag with viper
 	viper.BindPFlag(cFlagViperViper, rootCmd.Flags().Lookup(cFlagViperLong))
 
