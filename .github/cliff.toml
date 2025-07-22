@@ -105,7 +105,7 @@ commit_preprocessors = [
 ]
 # An array of regex based parsers for extracting data from the commit message.
 # Assigns commits to groups.
-# Optionally sets the commit's scope and can decide to exclude commits from further processing. 
+# Optionally sets the commit's scope and can decide to exclude commits from further processing.
 commit_parsers = [
   { message = "^feat", group = "<!-- 0 -->⛰️  Features" },
   { message = "^fix", group = "<!-- 1 -->🐛 Bug Fixes" },
