@@ -12,7 +12,7 @@ This tool provides a way to quick and easily create boilerplate code for all you
 ## To Do
 
 1. Use emojis and colour on the output/usage.
-2. Add the license features, always with a default opt-out.
+2. Add the license features, always with a default of opt-out.
 3. Have a rummage through the [original project's issues](https://github.com/spf13/cobra-cli/issues) and see what new features or fixes I can add.
 4. Add more complex templates:
   - One that uses `PreRunE` to validate flags/args and `RunE`, in order to enjoy automatic usage output when we detect an error that is usage related.
