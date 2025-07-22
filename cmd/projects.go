@@ -11,7 +11,7 @@ var (
 	projectsCmd = &cobra.Command{
 		Use:     "projects",
 		Aliases: []string{"p"},
-		Short:   "Lists the saved projects",
+		Short:   "Lists the saved projects (sub-commands: add, delete)",
 		Long:    `List (cobra-cli-ng projects) will list all the saved projects in "cobra-cli-ng.json".`,
 		Run:     runProjects,
 	}
