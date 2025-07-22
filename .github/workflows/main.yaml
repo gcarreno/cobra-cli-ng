@@ -1,0 +1,97 @@
+name: cobra-cli-ng
+
+defaults:
+  run:
+    shell: bash
+
+permissions:
+  contents: write
+
+on:
+
+  push:
+    branches: [ main ]
+    tags: [ "*" ]
+    paths-ignore: [ "README.md", "LICENSE", "CHANGELOG.md", "cliff.toml" ]
+
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: true
+      matrix:
+          os: [ ubuntu-latest, windows-latest, macos-latest]
+          go: [ "stable", "1.23" ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go }}
+
+      - name: Exporting Go version
+        run: |
+          {
+            echo "go_version=$(go version | cut -d' ' -f3)"
+          } >> "$GITHUB_ENV"
+
+      - name: Go Mod Tidy
+        run: go mod tidy
+
+      - name: Build
+        run: |
+          make clean
+          make build
+
+      - name: Upload Binaries
+        if: matrix.go == 'stable'
+        uses: actions/upload-artifact@v4
+        with:
+          name: cobra-cli-ng-${{ matrix.os }}-${{ env.go_version }}
+          path: bin/cobra-cli-ng*
+
+  release:
+    if: contains(github.ref_type, 'tag')
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Generate Release Notes
+        id: git-cliff
+        uses: orhun/git-cliff-action@main
+        with:
+          config: .github/cliff.toml
+          args: --latest --strip header --github-repo ${{ github.repository }}
+        env:
+          OUTPUT: RELEASE.md
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: cobra-cli-ng ${{ github.ref_name }}
+          body: ${{ steps.git-cliff.outputs.content }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
