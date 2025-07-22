@@ -1,7 +1,7 @@
 # GO env
-GO     := $(shell which go)
-GOPATH := $(shell $(GO) env | grep GOPATH | cut -d"'" -f2)
-GOOS   := $(shell $(GO) env | grep GOOS | cut -d"'" -f2)
+GO      := $(shell which go)
+GOPATH  := $(shell $(GO) env | grep GOPATH | cut -d"'" -f2)
+GOOS    := $(shell $(GO) env | grep GOOS | cut -d"'" -f2)
 ifeq ($(GOOS), set GOOS=windows)
 GOOS := windows
 endif
@@ -16,7 +16,7 @@ MODULE := github.com/gcarreno/cobra-cli-ng
 BIN := bin
 
 # Version
-VERSION := $(shell GOOS=$(GOOS) $(GO) run $(MAIN) "--version" | cut -d" " -f 3)
+VERSION := $(shell git describe --abbrev=0 --tags)
 
 # Proper executable name
 ifeq ($(GOOS), windows)
@@ -26,7 +26,7 @@ else
 EXE := cobra-cli-ng
 BINARY64 := cobra-cli-ng-$(GOOS)_amd64
 endif
-RELEASE64 := cobra-cli-ng-v$(VERSION)-$(GOOS)_amd64
+RELEASE64 := cobra-cli-ng-$(VERSION)-$(GOOS)_amd64
 
 # Silence  directory printing
 MAKEFLAGS += --no-print-directory
@@ -56,7 +56,7 @@ release: binary
 endif
 
 release-all: clean
-	$(info ========== Release all v$(VERSION))
+	$(info ========== Release all $(VERSION))
 	@GOOS=darwin $(MAKE) release
 	@GOOS=linux $(MAKE) release
 	@GOOS=windows $(MAKE) release

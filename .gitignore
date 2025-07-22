@@ -2,6 +2,7 @@
 /bin
 /research
 /cli
+/target
 cobra-cli-ng.json
 .env
 .cobra-cli-ng.yaml
