@@ -62,8 +62,8 @@ jobs:
           name: cobra-cli-ng-${{ matrix.os }}-go-stable-${{ env.go_version }}
           path: bin/cobra-cli-ng*
 
-  tests:
-    name: Tests
+  test:
+    name: Test
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -94,7 +94,7 @@ jobs:
     if: contains(github.ref_type, 'tag')
     name: Create GitHub Release
     runs-on: ubuntu-latest
-    needs: [build, tests]
+    needs: [build, test]
 
     steps:
       - name: Checkout
