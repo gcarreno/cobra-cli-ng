@@ -1,6 +1,7 @@
 # ====> Project
 /bin
 /research
+/cli
 cobra-cli-ng.json
 .env
 .cobra-cli-ng.yaml
