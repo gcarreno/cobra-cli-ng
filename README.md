@@ -9,6 +9,17 @@
 
 This tool provides a way to quick and easily create boilerplate code for all your commands and sub commands when using [cobra](https://github.com/spf13/cobra) and/or [viper](https://github.com/spf13/viper).
 
+## To Do
+
+1. Use emojis and colour on the output/usage.
+2. Add the license features, always with a default opt-out.
+3. Have a rummage through the [original project's issues](https://github.com/spf13/cobra-cli/issues) and see what new features or fixes I can add.
+4. Add more complex templates:
+  - One that uses `PreRunE` to validate flags/args and `RunE`, in order to enjoy automatic usage output when we detect an error that is usage related.
+  - One that exemplifies the use of an hierarchical config structure. Maybe with an `init` command that drops the config file with defaults.
+5. Tests.
+6. _Moar_ tests!!
+
 ## Motivation
 
 I've been using the original [cobra-cli](https://github.com/spf13/cobra-cli) for quite a while now. And I've enjoyed it immensely!!
