@@ -1,5 +1,6 @@
 # GO env
 GO      := $(shell which go)
+GOFMT   := $(shell which gofmt)
 GOPATH  := $(shell $(GO) env | grep GOPATH | cut -d"'" -f2)
 GOOS    := $(shell $(GO) env | grep GOOS | cut -d"'" -f2)
 ifeq ($(GOOS), set GOOS=windows)
@@ -33,11 +34,15 @@ MAKEFLAGS += --no-print-directory
 
 default: all
 
-all: test install
+all: install
+
+format:
+	$(info ========== Formatting)
+	@$(GOFMT) -s -w .
 
 test:
 	$(info ========== Testing)
-	$(GO) test -v -run "^Test" "$(MODULE)/tests"
+	@$(GO) test -v -run "^Test" "$(MODULE)/tests"
 
 binary: target/$(BINARY64)
 
@@ -73,7 +78,7 @@ build:
 	@mkdir -p $(BIN)
 	@$(GO) build -o $(BIN)/$(EXE) $(MAIN)
 
-install: test build
+install: format test build
 	$(info ========== Installing "$(BIN)/$(EXE)" to "$(GOPATH)/$(BIN)/$(EXE)")
 	@install $(BIN)/$(EXE) $(GOPATH)/$(BIN)/$(EXE)
 
