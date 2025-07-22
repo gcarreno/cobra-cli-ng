@@ -2,7 +2,7 @@
 GO     := $(shell which go)
 GOPATH := $(shell $(GO) env | grep GOPATH | cut -d"'" -f2)
 GOOS   := $(shell $(GO) env | grep GOOS | cut -d"'" -f2)
-ifeq ($(GOOS), "set GOOS=windows")
+ifeq ($(GOOS), set GOOS=windows)
 GOOS := windows
 endif
 
