@@ -17,7 +17,7 @@ This tool provides a way to quick and easily create boilerplate code for all you
 4. Add more complex templates:
   - One that uses `PreRunE` to validate flags/args and `RunE`, in order to enjoy automatic usage output when we detect an error that is usage related.
   - One that exemplifies the use of an hierarchical config structure. Maybe with an `init` command that drops the config file with defaults.
-5. Tests.
+5. ~~Tests~~ DONE.
 6. _Moar_ tests!!
 
 ## Motivation

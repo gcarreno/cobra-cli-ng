@@ -6,41 +6,81 @@ ifeq ($(GOOS), set GOOS=windows)
 GOOS := windows
 endif
 
-# Bin folder
-BIN    := bin
-
-# Proper executable name
-ifeq ($(GOOS), windows)
-EXE    := cobra-cli-ng.exe
-else
-EXE    := cobra-cli-ng
-endif
-
 # File containing "func main()"
-MAIN   := main.go
+MAIN := main.go
 
 # Project module name
 MODULE := github.com/gcarreno/cobra-cli-ng
 
+# Bin folder
+BIN := bin
+
+# Version
+VERSION := $(shell GOOS=linux $(GO) run $(MAIN) "--version" | cut -d" " -f 3)
+
+# Proper executable name
+ifeq ($(GOOS), windows)
+EXE := cobra-cli-ng.exe
+BINARY64 := cobra-cli-ng-$(GOOS)_amd64.exe
+else
+EXE := cobra-cli-ng
+BINARY64 := cobra-cli-ng-$(GOOS)_amd64
+endif
+RELEASE64 := cobra-cli-ng-v$(VERSION)-$(GOOS)_amd64
+
+# Silence  directory printing
+MAKEFLAGS += --no-print-directory
+
 default: all
 
-all: test build install
+all: test install
 
 test:
 	$(info ========== Testing)
-	$(GO) test -r "^Test" "$(MODULE)/tests"
+	$(GO) test -v -run "^Test" "$(MODULE)/tests"
+
+binary: target/$(BINARY64)
+
+ifeq ($(GOOS), windows)
+release: binary
+	$(info ========== Building release for "$(GOOS)" "$(RELEASE64)")
+	@cd target && md5sum $(BINARY64) > $(RELEASE64).md5
+	@cd target && zip -q $(RELEASE64).zip $(BINARY64) $(RELEASE64).md5
+	@cd target && rm -f $(BINARY64) $(RELEASE64).md5
+else
+release: binary
+	$(info ========== Building release for "$(GOOS)" "$(RELEASE64)")
+	@cd target && md5sum $(BINARY64) > $(RELEASE64).md5
+	@cd target && tar -czf $(RELEASE64).tgz $(BINARY64) $(RELEASE64).md5
+	@cd target && rm -f $(BINARY64) $(RELEASE64).md5
+endif
+
+release-all: clean
+	$(info ========== Release all v$(VERSION))
+	@GOOS=darwin $(MAKE) release
+	@GOOS=linux $(MAKE) release
+	@GOOS=windows $(MAKE) release
+
+target:
+	@mkdir -p $@
+
+target/$(BINARY64):
+	$(info ========== Building "$(@)")
+	@CGO_ENABLED=0 GOARCH=amd64 go build -o $@ $(MAIN)
 
 build:
-	$(info ========== Building for $(GOOS) into $(BIN)/$(EXE))
-	mkdir -p $(BIN)
-	$(GO) build -o $(BIN)/$(EXE) $(MAIN)
+	$(info ========== Building for "$(GOOS)" into "$(BIN)/$(EXE)")
+	@mkdir -p $(BIN)
+	@$(GO) build -o $(BIN)/$(EXE) $(MAIN)
 
 install: test build
-	$(info ========== Installing)
-	install $(BIN)/$(EXE) $(GOPATH)/bin/$(EXE)
+	$(info ========== Installing "$(BIN)/$(EXE)" to "$(GOPATH)/$(BIN)/$(EXE)")
+	@install $(BIN)/$(EXE) $(GOPATH)/$(BIN)/$(EXE)
 
 clean:
 	$(info ========== Cleaning)
-	rm -rfv $(BIN)
+	@rm -rf $(BIN)
+	@rm -rf target
+	@rm -f $(GOPATH)/bin/$(EXE)
 
-.PHONY: all test build install clean
+.PHONY: all test target release-all clean

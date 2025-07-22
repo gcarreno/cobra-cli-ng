@@ -49,7 +49,7 @@ jobs:
       - name: Go Mod Tidy
         run: go mod tidy
 
-      - name: Build
+      - name: Making build
         run: |
           make clean
           make build
@@ -58,7 +58,7 @@ jobs:
         if: matrix.go == 'stable'
         uses: actions/upload-artifact@v4
         with:
-          name: cobra-cli-ng-${{ matrix.os }}-${{ env.go_version }}
+          name: cobra-cli-ng-${{ matrix.os }}-go-stable-${{ env.go_version }}
           path: bin/cobra-cli-ng*
 
   release:
@@ -88,10 +88,14 @@ jobs:
         env:
           OUTPUT: RELEASE.md
 
+      - name: Making release-all
+        run: make release-all
+
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
           name: cobra-cli-ng ${{ github.ref_name }}
           body: ${{ steps.git-cliff.outputs.content }}
+          files: target/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

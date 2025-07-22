@@ -17,7 +17,6 @@ const (
 )
 
 type Command struct {
-	// ProjectName   string   `json:"-"` // Needed for the template
 	Filename      string   `json:"filename"`
 	Name          string   `json:"name"`
 	ParentCommand string   `json:"parent"`
@@ -34,7 +33,6 @@ func NewCommand(parent *Project, cmdName string, parentCmdName string, viper boo
 	)
 
 	return &Command{
-		// ProjectName:   parent.Name,
 		Filename:      filename,
 		Name:          cmdName,
 		ParentCommand: parentCmdName,

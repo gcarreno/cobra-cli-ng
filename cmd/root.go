@@ -109,7 +109,7 @@ func initConfig() {
 	}
 
 	// Enable ENV binding
-	viper.SetEnvPrefix("COBRACLING")
+	viper.SetEnvPrefix("NG")
 	viper.AutomaticEnv()
 
 	// Make env vars like COBRACLING_SUB_SOMETHING map to "sub.something"
